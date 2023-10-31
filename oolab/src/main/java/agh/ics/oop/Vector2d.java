@@ -18,8 +18,7 @@ public class Vector2d {
         return this.y;
     }
     public String toString(){
-        String krotka = String.format("(%d,%d)",this.x,this.y);
-        return krotka;
+        return String.format("(%d,%d)", this.x, this.y);
     }
     public boolean precedes(Vector2d other){
         return this.x <= other.x && this.y <= other.y;
@@ -43,6 +42,7 @@ public class Vector2d {
     public Vector2d opposite(){
         return new Vector2d(-this.x, -this.y);
     }
+
     public boolean equals(Object other){
         if (this == other)
             return true;

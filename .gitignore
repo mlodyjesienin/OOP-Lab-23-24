@@ -1,0 +1,5 @@
+**/.idea
+**/gradle
+oolab/.gitignore
+**/gradlew
+**/gradlew.bat
