@@ -5,8 +5,8 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RectangularMap implements WorldMap {
-    private Map<Vector2d, Animal> animals = new HashMap<>();
+public class RectangularMap implements WorldMap<Animal,Vector2d> {
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final int width;
     private final int height;
     private final Vector2d LOWER_CORNER;

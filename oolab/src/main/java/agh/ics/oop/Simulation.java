@@ -10,9 +10,9 @@ public class Simulation {
     private  List <MoveDirection> directions;
     private  List <Vector2d> positions;
 
-    private WorldMap worldMap;
+    private RectangularMap worldMap;
     private List <Animal> animals;
-    public Simulation(List <MoveDirection> directions, List <Vector2d> positions, WorldMap worldMap){
+    public Simulation(List <MoveDirection> directions, List <Vector2d> positions, RectangularMap worldMap){
         this.directions = directions;
         this.positions = positions;
         this.worldMap = worldMap;
