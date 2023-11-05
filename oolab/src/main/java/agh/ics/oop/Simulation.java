@@ -1,24 +1,25 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.*;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class Simulation {
     private  List <MoveDirection> directions;
     private  List <Vector2d> positions;
 
+    private WorldMap worldMap;
     private List <Animal> animals;
-    public Simulation(List <MoveDirection> directions, List <Vector2d> positions ){
+    public Simulation(List <MoveDirection> directions, List <Vector2d> positions, WorldMap worldMap){
         this.directions = directions;
         this.positions = positions;
+        this.worldMap = worldMap;
         this.animals  = new LinkedList<>();
         for (Vector2d position : positions){
             this.animals.add(new Animal(position));
+            this.worldMap.place(new Animal(position));
         }
     }
 
@@ -26,25 +27,25 @@ public class Simulation {
         Iterator<Animal> animalsIterator = animals.iterator();
         Animal currAnimal;
         int i=0;
-        for (MoveDirection directions : directions) {
+        for (MoveDirection direction : directions) {
             if (!animalsIterator.hasNext()) {
                 animalsIterator = animals.iterator();
                 i =1;
                 currAnimal = animalsIterator.next();
-                currAnimal.move(directions);
-                System.out.print("zwierze nr: ");
-                System.out.print(i);
-                System.out.print(" ");
-                System.out.println(currAnimal.toString());
+                //currAnimal.move(directions, worldMap);
+                //System.out.print(" ");
             } else {
                 currAnimal = animalsIterator.next();
                 i++;
-                currAnimal.move(directions);
-                System.out.print("zwierze nr: ");
-                System.out.print(i);
-                System.out.print(" ");
-                System.out.println(currAnimal.toString());
+                //currAnimal.move(directions, worldMap);
+                //System.out.print(" ");
             }
+            worldMap.move(currAnimal,direction);
+            System.out.println(currAnimal.getPosition());
+            System.out.println(direction);
+            System.out.print("ruch zwierzecia nr: ");
+            System.out.println(i);
+            System.out.println(worldMap);
         }
 
 

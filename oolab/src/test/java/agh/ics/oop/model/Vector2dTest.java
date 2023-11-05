@@ -1,5 +1,4 @@
 package agh.ics.oop.model;
-import agh.ics.oop.Vector2d;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

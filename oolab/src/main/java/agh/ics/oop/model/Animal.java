@@ -1,11 +1,7 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.Vector2d;
-
-import java.util.Map;
-
 import static agh.ics.oop.model.MapDirection.NORTH;
-
+import agh.ics.oop.model.RectangularMap;
 public class Animal {
     private Vector2d position;
     private MapDirection direction = NORTH;
@@ -27,13 +23,28 @@ public class Animal {
 
     @Override
     public String toString(){
-        return this.position.toString() +", " + this.direction.toString();
+        return switch (this.direction){
+            case NORTH -> "N";
+            case WEST -> "W";
+            case EAST -> "E";
+            case SOUTH -> "S";
+        };
     }
 
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
-    public void move(MoveDirection direction){
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Animal))
+            return false;
+        return (this.position).equals(((Animal) other).getPosition()) && this.direction.equals(((Animal) other).getDirection());
+    }
+
+    public void move(MoveDirection direction, MoveValidator validator){
         Vector2d potentialMove = new Vector2d(this.position.getX(), this.position.getY());
         switch(direction){
             case RIGHT -> this.direction = this.direction.next();
@@ -41,9 +52,7 @@ public class Animal {
             case BACKWARD ->  potentialMove = potentialMove.subtract(this.direction.toUnitVector());
             case FORWARD -> potentialMove = potentialMove.add(this.direction.toUnitVector());
         }
-        if(potentialMove.getX() >=0 && potentialMove.getX() <5 && potentialMove.getY() >=0 && potentialMove.getY() <5){
-            this.position = potentialMove;
-        }
+        if(validator.canMoveTo(potentialMove)) this.position = potentialMove;
     }
 
 }
