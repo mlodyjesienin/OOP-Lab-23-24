@@ -6,8 +6,8 @@ import static java.util.Objects.hash;
 
 
 public class Vector2d {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     public Vector2d(int x, int y){
         this.x = x;
         this.y = y;
@@ -21,10 +21,7 @@ public class Vector2d {
     public String toString(){
         return String.format("(%d,%d)", this.x, this.y);
     }
-    public boolean precedes(Vector2d other){
-        return this.x <= other.x && this.y <= other.y;
-
-    }
+    public boolean precedes(Vector2d other){ return this.x <= other.x && this.y <= other.y;}
     public boolean follows(Vector2d other){
         return this.x >= other.x && this.y >= other.y;
     }
@@ -55,7 +52,7 @@ public class Vector2d {
             return true;
         if (!(other instanceof Vector2d))
             return false;
-        return this.x == ((Vector2d) other).x && this.y == ((Vector2d) other).y;
+        return this.x == ((Vector2d) other).getX() && this.y == ((Vector2d) other).getY();
     }
 
 }

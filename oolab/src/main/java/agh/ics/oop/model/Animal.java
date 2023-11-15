@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import static agh.ics.oop.model.MapDirection.NORTH;
 import agh.ics.oop.model.RectangularMap;
-public class Animal {
+public class Animal implements WorldElement{
     private Vector2d position;
     private MapDirection direction = NORTH;
 
@@ -13,12 +13,10 @@ public class Animal {
         this(new Vector2d(2,2));
     }
 
-    public MapDirection getDirection() {
-        return direction;
-    }
+    public MapDirection getDirection() { return direction; }
 
     public Vector2d getPosition() {
-        return position;
+        return new Vector2d(position.getX(), position.getY());
     }
 
     @Override

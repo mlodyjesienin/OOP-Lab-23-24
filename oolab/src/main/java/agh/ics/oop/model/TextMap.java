@@ -3,7 +3,7 @@ package agh.ics.oop.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextMap implements WorldMap<String, Integer> {
+public class TextMap  implements WorldMap<String, Integer>{
     private final Map<Integer, String> objects = new HashMap<>();
 
     private Integer currSize;
@@ -12,7 +12,6 @@ public class TextMap implements WorldMap<String, Integer> {
         this.currSize = 0;
     }
 
-    @Override
     public boolean place(String object) {
         currSize++;
         objects.put(currSize,object);
@@ -20,12 +19,11 @@ public class TextMap implements WorldMap<String, Integer> {
 
     }
 
-    @Override
+
     public boolean isOccupied(Integer position) {
         return position <= currSize && position >=1;
     }
 
-    @Override
     public boolean canMoveTo(Integer position) {
         return position <= currSize && position >=1;
     }
@@ -38,7 +36,7 @@ public class TextMap implements WorldMap<String, Integer> {
         }
         return null;
     }
-    @Override
+
     public void move(String object, MoveDirection direction) {
         Integer key = getKeyByValue(objects,object);
         if(!(key==null)){
@@ -69,7 +67,7 @@ public class TextMap implements WorldMap<String, Integer> {
         }
     }
 
-    @Override
+
     public String objectAt(Integer position) {
         return objects.get(position);
     }

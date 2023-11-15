@@ -42,4 +42,5 @@ public interface WorldMap<T,P> extends MoveValidator<P> {
      * @return object or null if the position is not occupied.
      */
     T objectAt(P position);
+
 }
