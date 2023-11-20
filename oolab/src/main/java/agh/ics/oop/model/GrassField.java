@@ -30,7 +30,6 @@ public class GrassField extends AbstractWorldMap{
     }
 
     private void grassMapGenerator(){
-        lowerCorner = new Vector2d(0,0);
         int boundary = (int) sqrt(10*grassCount);
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(boundary, boundary, grassCount);
         for(Vector2d grassPosition : randomPositionGenerator) {
@@ -38,34 +37,32 @@ public class GrassField extends AbstractWorldMap{
         }
     }
 
-    public Vector2d getLowerCorner() {
+    public Boundary getCurrentBounds() {
         int boundary = (int) sqrt(10*grassCount);
-        lowerCorner = new Vector2d(boundary,boundary);              // w tym zakresie generowalismy na starcie
-        Vector2d position;                                          // trawy, dlatego mozemy byc pewni, że istnieje
-                                                                    // obecny element "ponizej" tego ( i go wykryjemy).
+        Vector2d upperCorner = new Vector2d(0,0);
+        Vector2d lowerCorner = new Vector2d(boundary,boundary);
+                                                                          // w tym, zakresie generowalismy na starcie
+                                                                          // trawy, dlatego mozemy byc pewni, ze istnieje
+                                                                          // obecny element "ponizej lower corner
+                                                                          // i "powyzej" upper corner ( i je wykryjemy)
+
+        Vector2d position;
         for (Map.Entry<Vector2d, Animal> entry : animals.entrySet()) {
             position = entry.getKey();
+            upperCorner = upperCorner.upperRight(position);
             lowerCorner = lowerCorner.lowerLeft(position);
+
         }
         for (Map.Entry<Vector2d, Grass> entry : grassMap.entrySet()) {
             position = entry.getKey();
+            upperCorner = upperCorner.upperRight(position);
             lowerCorner = lowerCorner.lowerLeft(position);
+
         }
-        return lowerCorner;
+
+        currentBound =  new Boundary(lowerCorner,upperCorner);
+        return currentBound;
     }
 
-    public Vector2d getUpperCorner() {
-        upperCorner = new Vector2d(0,0);              // od (0,0) generowalismy na starcie
-        Vector2d position;                                  // trawy, dlatego mozemy byc pewni, że istnieje
-                                                            // obecny element "powyzej" tego ( i go wykryjemy).
-        for (Map.Entry<Vector2d, Animal> entry : animals.entrySet()) {
-            position = entry.getKey();
-            upperCorner = upperCorner.upperRight(position);
-        }
-        for (Map.Entry<Vector2d, Grass> entry : grassMap.entrySet()) {
-            position = entry.getKey();
-            upperCorner = upperCorner.upperRight(position);
-        }
-        return upperCorner;
-    }
+
 }

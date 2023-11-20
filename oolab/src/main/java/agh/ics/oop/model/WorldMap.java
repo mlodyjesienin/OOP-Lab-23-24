@@ -9,7 +9,7 @@ import agh.ics.oop.model.Vector2d;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap<T,P> extends MoveValidator<P> {
+public interface WorldMap<T,P,S> extends MoveValidator<P> {
 
     /**
      * Place an object on the map.
@@ -17,13 +17,13 @@ public interface WorldMap<T,P> extends MoveValidator<P> {
      * @param object The object to place on the map.
      * @return True if the object was placed. The object cannot be placed if the move is not valid.
      */
-    boolean place(T object);
+    void place(S object) throws PositionAlreadyOccupiedException;
 
     /**
      * Moves an object (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    void move(T object, MoveDirection direction);
+    void move(S object, MoveDirection direction);
 
     /**
      * Return true if given position on the map is occupied. Should not be

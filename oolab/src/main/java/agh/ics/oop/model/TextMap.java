@@ -3,7 +3,7 @@ package agh.ics.oop.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextMap  implements WorldMap<String, Integer>{
+public class TextMap  implements WorldMap<String, Integer,String>{
     private final Map<Integer, String> objects = new HashMap<>();
 
     private Integer currSize;
@@ -12,10 +12,9 @@ public class TextMap  implements WorldMap<String, Integer>{
         this.currSize = 0;
     }
 
-    public boolean place(String object) {
+    public void place(String object) {
         currSize++;
         objects.put(currSize,object);
-        return true;
 
     }
 

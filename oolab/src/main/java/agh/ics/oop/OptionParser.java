@@ -24,6 +24,8 @@ public class OptionParser {
                 case "l" -> {
                     moves.add(MoveDirection.LEFT);
                 }
+                default -> throw new IllegalArgumentException(simple_move + " is not legal move specification");
+
             }
         }
 

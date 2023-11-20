@@ -2,31 +2,44 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d> {
+abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d, Animal> {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    protected Vector2d lowerCorner;
-    protected Vector2d upperCorner;
+    protected Boundary currentBound;
     protected final MapVisualizer visualizer = new MapVisualizer(this);
 
-    public void move(WorldElement animal, MoveDirection direction) {
+    private final Set<MapChangeListener> Listeners = new HashSet<>();
+
+
+    public void subscribe(MapChangeListener listener){
+        Listeners.add(listener);
+    }
+    public void unsubscribe(MapChangeListener listener){
+        Listeners.remove(listener);
+    }
+    private void mapChanged(String message){
+        for (MapChangeListener listener : Listeners) {
+            listener.mapChanged(this, message);
+        }
+    }
+    public void move(Animal animal, MoveDirection direction) {
         Vector2d currPosition = animal.getPosition();
-        if (animals.containsValue((Animal) animal)) {
-            ((Animal) animal).move(direction, this);
+        if (animals.containsValue(animal)) {
+            animal.move(direction, this);
             Vector2d newPosition = animal.getPosition();
             animals.remove(currPosition);
             animals.put(newPosition, (Animal) animal);
+            mapChanged("Old Pos: " + currPosition + " Moved " + direction + " New Pos:" + newPosition);
         }
     }
-    public boolean place(WorldElement animal) {
+    public void place(Animal animal) throws PositionAlreadyOccupiedException {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
-            animals.put(position, (Animal) animal);
-            return true;
+            animals.put(position,animal);
+            mapChanged("Placed new Animal at: " +  position);
         }
-        else return false;
+        else throw new PositionAlreadyOccupiedException(position);
     }
     public boolean isOccupied(Vector2d position){
         return animals.containsKey(position);
@@ -39,13 +52,9 @@ abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d> {
     public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
     }
-    public Vector2d getLowerCorner(){
-        return lowerCorner;
-    }
-    public Vector2d getUpperCorner(){
-        return upperCorner;
-    }
+    public  abstract Boundary getCurrentBounds();
+
     public String toString() {
-       return visualizer.draw(getLowerCorner(),getUpperCorner());
+       return visualizer.draw(getCurrentBounds().lowerCorner(), getCurrentBounds().upperCorner());
     }
 }
