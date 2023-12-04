@@ -4,12 +4,12 @@ import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
 
-abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d, Animal> {
+public abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d, Animal> {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected Boundary currentBound;
     protected final MapVisualizer visualizer = new MapVisualizer(this);
-
     private final Set<MapChangeListener> Listeners = new HashSet<>();
+    private final UUID mapID = UUID.randomUUID();
 
 
     public void subscribe(MapChangeListener listener){
@@ -23,6 +23,11 @@ abstract class AbstractWorldMap implements WorldMap<WorldElement,Vector2d, Anima
             listener.mapChanged(this, message);
         }
     }
+
+    public UUID getMapID() {
+        return mapID;
+    }
+
     public void move(Animal animal, MoveDirection direction) {
         Vector2d currPosition = animal.getPosition();
         if (animals.containsValue(animal)) {

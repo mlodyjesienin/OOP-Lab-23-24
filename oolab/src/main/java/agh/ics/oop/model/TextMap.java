@@ -2,9 +2,12 @@ package agh.ics.oop.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class TextMap  implements WorldMap<String, Integer,String>{
     private final Map<Integer, String> objects = new HashMap<>();
+    private final UUID mapID = UUID.randomUUID();
+
 
     private Integer currSize;
 
@@ -18,6 +21,10 @@ public class TextMap  implements WorldMap<String, Integer,String>{
 
     }
 
+    @Override
+    public UUID getMapID() {
+        return mapID;
+    }
 
     public boolean isOccupied(Integer position) {
         return position <= currSize && position >=1;

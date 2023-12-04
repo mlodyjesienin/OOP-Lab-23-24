@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Simulation {
+public class Simulation implements Runnable {
     private final List <MoveDirection> directions;
 
-    private final RectangularMap worldMap;
+    private final AbstractWorldMap worldMap;
     private final List <Animal> animals;
-    public Simulation(List <MoveDirection> directions, List <Vector2d> positions, RectangularMap worldMap){
+    public Simulation(List <MoveDirection> directions, List <Vector2d> positions, AbstractWorldMap worldMap){
         this.directions = directions;
         this.worldMap = worldMap;
         this.animals  = new LinkedList<>();
