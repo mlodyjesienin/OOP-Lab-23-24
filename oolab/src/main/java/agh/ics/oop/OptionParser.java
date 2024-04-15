@@ -2,35 +2,34 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class OptionParser {
-    public static MoveDirection[] optparser(String[] args) {
-        int ind =0;
-        MoveDirection[] tab = new MoveDirection [args.length] ;
-        for (String x : args) {
+    public static List <MoveDirection> optParser(String[] args) {
+        List<MoveDirection> moves = new LinkedList<>();
+        for (String simple_move : args) {
 
-            switch (x) {
+            switch (simple_move) {
                 case "f" -> {
-                    tab[ind] = MoveDirection.FORWARD;
-                    ind++;
+                    moves.add(MoveDirection.FORWARD);
                 }
                 case "b" -> {
-                    tab[ind] = MoveDirection.BACKWARD;
-                    ind+=1;
+                    moves.add(MoveDirection.BACKWARD);
                 }
                 case "r" -> {
-                    tab[ind] = MoveDirection.RIGHT;
-                    ind+=1;
+                    moves.add(MoveDirection.RIGHT);
                 }
                 case "l" -> {
-                    tab[ind] = MoveDirection.LEFT;
-                    ind+=1;
+                    moves.add(MoveDirection.LEFT);
                 }
+                default -> throw new IllegalArgumentException(simple_move + " is not legal move specification");
+
             }
         }
 
-        return Arrays.copyOfRange(tab,0,ind);
+        return moves;
     }
 
 }
