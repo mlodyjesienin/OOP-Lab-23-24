@@ -1,5 +1,4 @@
 package agh.ics.oop;
-
 import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
@@ -39,8 +38,5 @@ public class World {
         }
 
         System.out.println("SYSTEM ZAKONCZYL DZIALANIE");
-
-
-
     }
 }
